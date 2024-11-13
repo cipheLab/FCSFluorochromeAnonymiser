@@ -66,7 +66,7 @@ server <- function(input, output) {
             print(j)  # Debugging line
             print(listObject$selected_rows[j])  # Check which row is being processed
             old_column_name <- colnames(data)[listObject$selected_rows[j]]
-            new_column_name <- LETTERS[j]  # Rename to 'A', 'B', 'C', etc.
+            new_column_name <- LETTERS[j] 
             print(new_column_name)
             colnames(data)[listObject$selected_rows[j]] <- new_column_name
           }
