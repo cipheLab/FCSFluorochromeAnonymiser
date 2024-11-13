@@ -15,4 +15,12 @@ This tool is a Rshiny application that anonymises certain columns in one or more
 To run this project, you will need several R packages. Here is the list of required packages:
 
 ```R
-install.packages(c("shiny", "flowCore", "DT","shinythemes","shinybusy","shinydashboard","shinyjs"))
+install.packages(c("shiny", "DT","shinythemes","shinybusy","shinydashboard","shinyjs"))
+```
+
+```R
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("flowCore")
+```
