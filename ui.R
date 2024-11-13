@@ -32,7 +32,8 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       fileInput('file1', 'Choose FCS File', accept = c('.fcs'), multiple = TRUE),
-      downloadButton('downloadData', 'Download Modified File', class = "btn-primary")
+      actionButton('downloadData', 'Download Modified File'),
+
     ),
     mainPanel(
       DTOutput('table')  ,# Display the interactive table
@@ -40,5 +41,3 @@ ui <- fluidPage(
     )
   )
 )
-
-# server and other parts of your Shiny app...
