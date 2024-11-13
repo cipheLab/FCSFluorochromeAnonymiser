@@ -1,5 +1,5 @@
 # FCSColumnNameEditor
-This tool can be used to select the parameters to be anonymised in an FCS file.
+This tool is a Rshiny application that anonymises certain columns in one or more FCS files.
 
    ## Usage
 
@@ -9,9 +9,9 @@ This tool can be used to select the parameters to be anonymised in an FCS file.
 ### 4 - Download the modified FCS
 
 
-# Requirements
+## Requirements
 
 To run this project, you will need several R packages. Here is the list of required packages:
 
 ```R
-install.packages(c("shiny", "flowCore", "DT"))
+install.packages(c("shiny", "flowCore", "DT","shinythemes","shinybusy","shinydashboard","shinyjs"))
