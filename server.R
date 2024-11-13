@@ -49,54 +49,40 @@ server <- function(input, output) {
   observeEvent(input$table_rows_selected, {
     info <- input$table_rows_selected
     selected_rows <- input$table_rows_selected
-    print(selected_rows)  # Debugging line
+
     
     dataList <- fcsDataList()
     if (length(dataList) == 0 || length(selected_rows) == 0) return()
     listObject$dataList<-dataList
     listObject$selected_rows<-selected_rows
   })
-
-  observeEvent(input$changeNames, {
-
-        for (i in seq_along(listObject$dataList)) {
-          data <- listObject$dataList[[i]]
-          print(i)
-          for (j in seq_along(listObject$selected_rows)) {
-            print(j)  # Debugging line
-            print(listObject$selected_rows[j])  # Check which row is being processed
-            old_column_name <- colnames(data)[listObject$selected_rows[j]]
-            new_column_name <- LETTERS[j] 
-            print(new_column_name)
-            colnames(data)[listObject$selected_rows[j]] <- new_column_name
-          }
-          listObject$dataList[[i]] <- data  # Update the data in the list
-        }
-        fcsDataList(listObject$dataList)  # Update the fcsDataList
-        showNotification("Les colonnes sélectionnées ont été mises à jour.", type = "message")
   
-  })
-  output$downloadData <- downloadHandler(
-    filename = function() {
-      paste("updated_files", Sys.Date(), ".zip", sep = "")
-    },
-    content = function(zip_file) {
-      dataList <- fcsDataList()
-      if (is.null(dataList) || length(dataList) == 0) {
-        return(NULL)
+  observeEvent(input$changeNames, {
+    
+    for (i in seq_along(listObject$dataList)) {
+      data <- listObject$dataList[[i]]
+
+      for (j in seq_along(listObject$selected_rows)) {
+    
+        old_column_name <- colnames(data)[listObject$selected_rows[j]]
+        new_column_name <- LETTERS[j] 
+      
+        colnames(data)[listObject$selected_rows[j]] <- new_column_name
       }
-      
-      files <- sapply(seq_along(dataList), function(i) {
-        file_name <- basename(names(dataList)[[i]])
-        write.FCS(dataList[[i]], file_name)
-        file_name
-      })
-      
-      zip(zip_file, files, flags = '-r9Xj')
-      sapply(files, unlink)
-    },
-    contentType = "application/zip"
-  )
+      listObject$dataList[[i]] <- data  # Update the data in the list
+    }
+    fcsDataList(listObject$dataList)  # Update the fcsDataList
+    showNotification("Les colonnes sélectionnées ont été mises à jour.", type = "message")
+    
+  })
+  observeEvent(input$downloadData,{
+
+    for (i in seq_along(listObject$dataList)) {
+        file_name <- basename(names(listObject$dataList)[[i]])
+        print(paste0("files download :", getwd()))
+        write.FCS(listObject$dataList[[i]], paste0(getwd(),"/modified_",file_name))
+
+      }
+
+  })
 }
-
-
