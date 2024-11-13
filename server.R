@@ -83,6 +83,6 @@ server <- function(input, output) {
         write.FCS(listObject$dataList[[i]], paste0(getwd(),"/modified_",file_name))
 
       }
-
+    showNotification("Fichiers téléchargés ! ", type = "message")
   })
 }
