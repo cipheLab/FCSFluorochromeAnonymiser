@@ -74,7 +74,7 @@ server <- function(input, output) {
       spill_matrix_indice <- grep("SPILL", names(data@description))
       if (length(spill_matrix_indice) != 0) {
         target_matrix <- data@description[[spill_matrix_indice]]
-        print(target_matrix)
+      
         if (old_column_name %in% colnames(target_matrix)) {
           colnames(target_matrix)[which(colnames(target_matrix) == old_column_name)] <- new_column_name
           data@description[[spill_matrix_indice]] <- target_matrix
