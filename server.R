@@ -69,6 +69,17 @@ server <- function(input, output) {
       
         colnames(data)[listObject$selected_rows[j]] <- new_column_name
       }
+      
+      # Apply changes to the SPILL matrix if necessary
+      spill_matrix_indice <- grep("SPILL", names(data@description))
+      if (length(spill_matrix_indice) != 0) {
+        target_matrix <- data@description[[spill_matrix_indice]]
+        print(target_matrix)
+        if (old_column_name %in% colnames(target_matrix)) {
+          colnames(target_matrix)[which(colnames(target_matrix) == old_column_name)] <- new_column_name
+          data@description[[spill_matrix_indice]] <- target_matrix
+        }
+      }
       listObject$dataList[[i]] <- data  # Update the data in the list
     }
     fcsDataList(listObject$dataList)  # Update the fcsDataList
