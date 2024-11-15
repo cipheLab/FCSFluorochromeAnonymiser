@@ -5,11 +5,18 @@ This tool is a Rshiny application that anonymises certain columns in one or more
 
 
 #### 1 - Download FCSColumnNameEditor ZIP file
+
 #### 2 - Launch App
+
 #### 3 - Load FCS file(s)
+
 #### 4 - Select the lines to be anonymised
+
 #### 5 - Click on the ‘change Names’ button
+
 #### 6 - Download the modified FCS
+
+#### 7 - 
 
 
 ## Requirements
