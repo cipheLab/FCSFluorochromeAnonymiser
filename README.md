@@ -9,12 +9,14 @@ This tool is a Rshiny application that anonymises certain columns in one or more
 ![image](https://github.com/user-attachments/assets/e70d8421-f14d-40cc-963a-f0f25d021d38)
 
 #### 2 - In RStudio, open ui.R OR server.R file
-#### 3 - 
-#### 2 - Launch App
 
-#### 3 - Load FCS file(s)
+#### 3 - Launch App 
+![image](https://github.com/user-attachments/assets/02eee245-1028-4fdc-b140-d11271d4247d)
+
+#### 4 - Load FCS file(s)
 
 #### 4 - Select the lines to be anonymised
+
 
 #### 5 - Click on the ‘change Names’ button
 
