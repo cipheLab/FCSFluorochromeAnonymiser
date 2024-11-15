@@ -6,6 +6,9 @@ This tool is a Rshiny application that anonymises certain columns in one or more
 
 #### 1 - Download FCSColumnNameEditor ZIP file
 
+![image](https://github.com/user-attachments/assets/e70d8421-f14d-40cc-963a-f0f25d021d38)
+
+
 #### 2 - Launch App
 
 #### 3 - Load FCS file(s)
