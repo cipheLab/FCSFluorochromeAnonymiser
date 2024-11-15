@@ -15,7 +15,7 @@ This tool is a Rshiny application that anonymises certain columns in one or more
 
 #### 4 - Load FCS file(s)
 
-#### 5 - Select the lines to be anonymised
+#### 5 - Click on the lines to be anonymised
 ![image](https://github.com/user-attachments/assets/9a1212c3-4e86-4d5a-bc00-b7f47f5dda02)
 
 #### 6 - Click on the ‘change Names’ button
