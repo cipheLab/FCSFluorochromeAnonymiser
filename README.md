@@ -1,5 +1,5 @@
 # FCSFluorochromeAnonymiser
-This tool is a Rshiny application that anonymises certain columns in one or more FCS files.
+This tool is a Rshiny application that anonymises fluorochromes in one or more FCS files.
 
    ## Usage
 
