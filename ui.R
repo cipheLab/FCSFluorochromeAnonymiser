@@ -37,7 +37,7 @@ ui <- fluidPage(
     ),
     mainPanel(
       DTOutput('table')  ,# Display the interactive table
-      actionButton("changeNames", "Change names"),
+      actionButton("changeNames", "anonymise"),
     )
   )
 )
