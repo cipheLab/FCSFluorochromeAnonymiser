@@ -16,12 +16,16 @@ This tool is a Rshiny application that anonymises fluorochromes in one or more F
 #### 4 - Load FCS file(s)
 
 #### 5 - Click on the lines to be anonymised
+
 ![image](https://github.com/user-attachments/assets/d64c05ed-af88-4913-92d1-6fc60831d9b2)
 
 
 #### 6 - Click on the ‘Anonymise’ button
 
 #### 7 - Download the modified FCS
+
+![image](https://github.com/user-attachments/assets/1e3e9cc4-52a0-46aa-b3c5-242299231a19)
+
 
 ## Requirements
 
