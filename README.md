@@ -6,6 +6,7 @@ This tool is a Rshiny application that anonymises certain columns in one or more
 
 #### 1 - Download FCSFluorochromeAnonymiser ZIP file
 
+![image](https://github.com/user-attachments/assets/af4446c2-98c5-4172-bd9d-1271379ccd23)
 
 #### 2 - In RStudio, open ui.R OR server.R file
 
