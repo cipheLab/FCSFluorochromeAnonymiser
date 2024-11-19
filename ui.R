@@ -10,7 +10,7 @@ library(shinythemes)
 ui <- fluidPage(
   theme = shinytheme("flatly"),  # Applying a theme
   
-  titlePanel("FCS Fluorochrome Anonymiser", windowTitle = "FCS Editor"),
+  titlePanel("FCS Fluorochrome Anonymiser", windowTitle = "FCS Anonymiser"),
   
   tags$head(
     tags$style(HTML("
