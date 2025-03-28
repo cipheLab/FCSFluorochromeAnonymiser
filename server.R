@@ -93,10 +93,21 @@ server <- function(input, output) {
   })
   
   observeEvent(input$downloadData, {
+    showModal(modalDialog(
+      title = "Export anonymized FCS  ",
+      tags$div(
+        style = "text-align: center;",
+        tags$p("Please wait.")
+      ),
+      footer = NULL,
+      easyClose = FALSE
+    ))
     for (i in seq_along(listObject$dataList)) {
       file_name <- basename(names(listObject$dataList)[[i]])
       write.FCS(listObject$dataList[[i]], file.path(getwd(), paste0("modified_", file_name)))
     }
-    showNotification("Fichiers téléchargés !", type = "message")
+
+   
+    removeModal()
   })
 }
