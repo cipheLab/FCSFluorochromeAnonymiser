@@ -5,13 +5,10 @@ library(DT)
 server <- function(input, output) {
   listObject <- reactiveValues(
     dataList = NULL,
-    selected_rows=NULL)
-  
+    selected_rows = NULL)
   
   fixUploadedFilesNames <- function(x) {
-    if (is.null(x)) {
-      return()
-    }
+    if (is.null(x)) return()
     
     oldNames = x$datapath
     newNames = file.path(dirname(x$datapath), x$name)
@@ -26,9 +23,7 @@ server <- function(input, output) {
   
   observe({
     inFiles <- fixUploadedFilesNames(input$file1)
-    if (is.null(inFiles)) {
-      return(NULL)
-    }
+    if (is.null(inFiles)) return(NULL)
     
     dataList <- lapply(inFiles$datapath, read.FCS)
     names(dataList) <- inFiles$datapath
@@ -38,62 +33,70 @@ server <- function(input, output) {
   # Output the interactive table with row selection
   output$table <- renderDT({
     dataList <- fcsDataList()
-    if (is.null(dataList) || length(dataList) == 0) {
-      return(data.frame())
-    }
+    if (is.null(dataList) || length(dataList) == 0) return(data.frame())
+    
     data <- dataList[[1]]
     colnames_table <- colnames(exprs(data))
     data.frame(Column = colnames_table, stringsAsFactors = FALSE)
   }, editable = TRUE, selection = 'multiple', options = list(pageLength = 100, scrollX = TRUE))
   
   observeEvent(input$table_rows_selected, {
-    info <- input$table_rows_selected
     selected_rows <- input$table_rows_selected
-
-    
     dataList <- fcsDataList()
+    
     if (length(dataList) == 0 || length(selected_rows) == 0) return()
-    listObject$dataList<-dataList
-    listObject$selected_rows<-selected_rows
+    
+    listObject$dataList <- dataList
+    listObject$selected_rows <- selected_rows
   })
   
-  observeEvent(input$changeNames, {
+  # Helper function to generate variable names beyond Z (AA, AB, etc.)
+  generateColumnNames <- function(n) {
+    base <- LETTERS
+    if (n <= length(base)) return(base[1:n])
     
+    # For names beyond 'Z' (e.g., 'AA', 'AB', ...)
+    extended <- c()
+    for (i in 1:ceiling(n / length(base))) {
+      extended <- c(extended, paste0(rep(base[i], length(base)), base))
+    }
+    return(extended[1:n])
+  }
+  
+  observeEvent(input$changeNames, {
     for (i in seq_along(listObject$dataList)) {
       data <- listObject$dataList[[i]]
-
-      for (j in seq_along(listObject$selected_rows)) {
-    
-        old_column_name <- colnames(data)[listObject$selected_rows[j]]
-        new_column_name <- LETTERS[j] 
+      selected <- listObject$selected_rows
+      new_names <- generateColumnNames(length(selected))
       
-        colnames(data)[listObject$selected_rows[j]] <- new_column_name
-      }
+      old_column_names <- colnames(data)[selected]
+      colnames(data)[selected] <- new_names
       
-      # Apply changes to the SPILL matrix if necessary
-      spill_matrix_indice <- grep("SPILL", names(data@description))
-      if (length(spill_matrix_indice) != 0) {
-        target_matrix <- data@description[[spill_matrix_indice]]
-      
-        if (old_column_name %in% colnames(target_matrix)) {
-          colnames(target_matrix)[which(colnames(target_matrix) == old_column_name)] <- new_column_name
-          data@description[[spill_matrix_indice]] <- target_matrix
+      # Update SPILL or SPILLOVER if present
+      for (spill_key in c("SPILL", "$SPILLOVER")) {
+        if (spill_key %in% names(data@description)) {
+          target_matrix <- data@description[[spill_key]]
+          for (j in seq_along(old_column_names)) {
+            old_name <- old_column_names[j]
+            new_name <- new_names[j]
+            if (old_name %in% colnames(target_matrix)) {
+              colnames(target_matrix)[colnames(target_matrix) == old_name] <- new_name
+              data@description[[spill_key]] <- target_matrix
+            }
+          }
         }
       }
-      listObject$dataList[[i]] <- data  # Update the data in the list
+      listObject$dataList[[i]] <- data
     }
-    fcsDataList(listObject$dataList)  # Update the fcsDataList
+    fcsDataList(listObject$dataList)
     showNotification("Les colonnes sélectionnées ont été mises à jour.", type = "message")
-    
   })
-  observeEvent(input$downloadData,{
-
+  
+  observeEvent(input$downloadData, {
     for (i in seq_along(listObject$dataList)) {
-        file_name <- basename(names(listObject$dataList)[[i]])
-        print(paste0("files download :", getwd()))
-        write.FCS(listObject$dataList[[i]], paste0(getwd(),"/modified_",file_name))
-
-      }
-    showNotification("Fichiers téléchargés ! ", type = "message")
+      file_name <- basename(names(listObject$dataList)[[i]])
+      write.FCS(listObject$dataList[[i]], file.path(getwd(), paste0("modified_", file_name)))
+    }
+    showNotification("Fichiers téléchargés !", type = "message")
   })
 }
