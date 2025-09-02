@@ -24,7 +24,7 @@ This tool is a Rshiny application that anonymises fluorochromes in one or more F
 
 #### 7 - Download the modified FCS
 #### 8 - Choose the output folder 
-
+![image](folder.png)
 
 
 ## Requirements
@@ -32,7 +32,7 @@ This tool is a Rshiny application that anonymises fluorochromes in one or more F
 To run this project, you will need several R packages. Here is the list of required packages:
 
 ```R
-install.packages(c("shiny", "DT","shinythemes","shinybusy","shinydashboard","shinyjs"))
+install.packages(c("shiny", "DT","shinythemes","shinybusy","shinydashboard","shinyjs","shinycssloaders","zip"))
 ```
 
 ```R
