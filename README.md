@@ -23,8 +23,8 @@ This tool is a Rshiny application that anonymises fluorochromes in one or more F
 #### 6 - Click on the ‘Anonymise’ button
 
 #### 7 - Download the modified FCS
+#### 8 - Choose the output folder 
 
-![image](https://github.com/user-attachments/assets/1e3e9cc4-52a0-46aa-b3c5-242299231a19)
 
 
 ## Requirements
