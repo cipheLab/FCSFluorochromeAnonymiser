@@ -1,9 +1,13 @@
+
 library(shiny)
-library(DT) 
-library(shinydashboard)
+library(flowCore)
+library(DT)
+library(shinycssloaders)  
+library(shinyFiles)
+library(zip)
 library(shinyjs)
 library(shinybusy)
-library(flowCore)
+library(shinydashboard)
 library(shinythemes)
 
 ui <- dashboardPage(
@@ -14,42 +18,30 @@ ui <- dashboardPage(
       menuItem("Help", tabName = "help", icon = icon("question")),
       menuItem("Upload", tabName = "upload", icon = icon("upload"))
     ),
-    
-  actionButton('downloadData', 'Download Modified File', 
-                   style = "margin-top: 20px;")
+    uiOutput("downloadData")
   ),
   
   dashboardBody(
-    tags$head(
-      tags$style(HTML("
-        .info-text {
-          color: red; 
-          font-style: italic;
-          margin-bottom: 20px;
-        }
-        .custom-header {
-          text-align: center;
-          margin-bottom: 20px;
-        }
-      "))
-    ),
+    useShinyjs(),
+    add_busy_spinner(spin = "fading-circle", color = "#3498db", position = "top-right", margins = c(20, 20)),
     
     tabItems(
       tabItem(tabName = "upload",
               fluidRow(
                 column(12,
                        tags$h3("Please ensure that all uploaded FCS files have the same column names!", 
-                               class = "info-text"),
-                       tags$hr(),  # Horizontal line for better separation
-                       fileInput('file1', 'Choose FCS File', 
-                                 accept = c('.fcs'), multiple = TRUE),
-                       tags$br(),  # Line break for spacing
-                       actionButton("changeNames", "Anonymise", 
-                                    class = "btn btn-primary")  # Button with styling
+                               style = "color:red; font-style:italic; margin-bottom:20px;"),
+                       tags$hr(),  
+                       fileInput('file1', 'Choose FCS File', accept = c('.fcs'), multiple = TRUE),
+                       tags$br(),  
+                       actionButton("changeNames", "Anonymise", class = "btn btn-primary")  
                 ),
-                column(12, DTOutput('table'),  # Display the interactive table
-                       tags$br(),  # Line break for spacing
-                       tags$div(id = "status_message")  # Placeholder for status messages
+                
+                column(
+                  12,
+                  shinycssloaders::withSpinner(DT::DTOutput('table'), color = "#3498db"),
+                  tags$br(),
+                  tags$div(id = "status_message")
                 )
               )
       ),
@@ -60,7 +52,7 @@ ui <- dashboardPage(
                 tags$li("Load FCS file(s)"),
                 tags$li("Select lines to be anonymized"),
                 tags$li("Click on the ‘Anonymise’ button"),
-                tags$li("Download the modified FCS file")
+                tags$li("Click on 'Download ZIP' to save the modified files")
               )
       )
     )
