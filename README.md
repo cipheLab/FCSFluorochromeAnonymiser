@@ -17,7 +17,7 @@ This tool is a Rshiny application that anonymises fluorochromes in one or more F
 
 #### 5 - Click on the lines to be anonymised
 
-![image](https://github.com/user-attachments/assets/d64c05ed-af88-4913-92d1-6fc60831d9b2)
+![image](download.png)
 
 
 #### 6 - Click on the ‘Anonymise’ button
